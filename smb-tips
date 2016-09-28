@@ -1,0 +1,17 @@
+This brings out an important point in Samba terminology:
+
+A server is a computer with a resource to share.
+
+A client is a computer that wishes to use that resource.
+
+A computer can be a client, a server, or both, or it can be neither at any given time.
+
+
+The client and server must complete three steps to establish a connection to a resource:
+
+Establish a NetBIOS session.
+
+Negotiate the protocol variant.
+
+Set session parameters, and make a tree connection to a resource.
+

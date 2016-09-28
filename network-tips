@@ -1,0 +1,9 @@
+If you are on a private network where you have the authority to assign your own IP addresses, you can select from addresses in one of three ranges:[3]
+
+10.0.0.1 through 10.255.255.254
+
+172.16.0.1 through 172.31.255.254
+
+192.168.0.1 through 192.168.255.254
+
+ 

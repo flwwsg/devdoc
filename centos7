@@ -1,0 +1,49 @@
+Q:Out-of-the-box CentOS in VirtualBox (NAT): Network is unreachable
+
+A:To get Centos to run on Virtual Box, in /etc/sysconfig/network-scripts/ifcfg-eth0:
+
+DEVICE=eth0  
+BOOTPROTO=dhcp  
+ONBOOT=yes
+
+whatsnew in centos 7
+http://www.cnblogs.com/panblack/p/Centos7-WhatsNew-01.html
+
+ip addr     
+ip route 显示和设定路由
+
+用ss 代替 netstat
+ss -ant = netstat -ant
+
+网络配置文件:
+/etc/sysconfig/network   　说是全局设置，默认里面啥也没有，可以添加全局默认网关
+/etc/hostname            　　用nmtui修改hostname后，主机名保存在这里
+/etc/resolv.conf         　　  保存DNS设置，不需要手工改，nmtui里面设置的DNS会出现在这里
+/etc/sysconfig/network-scripts/　　　　　　　连接配置信息 ifcfg 文件
+/etc/NetworkManager/system-connections/　 VPN、移动宽带、PPPoE连接
+
+How do I add a user to the “sudo” group?
+sudo usermod -aG sudo <username>
+
+Can I add myself to group `root'?
+
+sudo adduser <username> root
+
+
+why does CentOS say that my account 'is not on the sudoers list'?
+
+centOS doesn't use sudo by default. Unlike Ubuntu, where the first user set up in the installer has rights to run anything with sudo, CentOS gives no such rights to anybody. By default, the only way to run programs with root privileges is to log in as root, by running su in a terminal. If you want to enable sudo for you or others, you'll need to edit the sudoers list, using the command visudo. This uses the editor defined in $EDITOR or, if that's not set, Vi. This method checks the syntax before committing it to the real file, which avoids you locking yourself out with a typing error. Run it with
+
+su -
+visudo
+or
+EDITOR="emacs" visudo
+
+centos7 firewall开放ssh\22\80端口
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --reload
+
+install virtualbox addtions 
+https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest
+http://tecadmin.net/install-oracle-virtualbox-on-centos-redhat-and-fedora/

@@ -1,0 +1,5 @@
+To be able to read the Samba manual pages using the man command, the directory where Samba's manual pages reside, /usr/local/samba/man by default, must be in your MANPATH environment variable. On Red Hat Linux, this can be accomplished by adding the following two lines to /etc/man.config:
+
+ MANPATH            /usr/local/samba/man
+MANPATH_MAP        /usr/local/samba/bin     /usr/local/samba/man
+ 

@@ -1,0 +1,13 @@
+$where如何实现or查询
+$condition['b'] = $keywords;
+$condition['c'] = $keywords;
+$condition['_logic'] = "and";
+$map['_complex']=$condition;
+$map['a']=$keywords;
+$map['_logic']='or';
+
+让Json更懂中文(JSON_UNESCAPED_UNICODE)
+echo json_encode("中文", JSON_UNESCAPED_UNICODE);
+
+array_push
+$array[] = $var;

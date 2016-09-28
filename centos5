@@ -1,0 +1,2 @@
+重启服务
+/etc/init.d/xxx stop/restart
