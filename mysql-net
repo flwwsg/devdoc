@@ -43,3 +43,13 @@ A better way is to use SHOW KEYS since you don't always have access to informati
 
 SHOW KEYS FROM table WHERE Key_name = 'PRIMARY'
 Column_name will contain the name of the primary key.
+
+mysql -h localhost -P3308 -uroot -p  
+
+alter table
+column name 
+ALTER TABLE `table_name` CHANGE `old_column` `new_column` data_type
+
+add column
+ALTER TABLE `table_name` ADD `column_name` data_type
+ 
