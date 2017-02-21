@@ -1,1 +1,105 @@
 import is a statement but reload is a function
+
+删除文件：
+os.remove()
+os.rmdir()
+os.removedirs()
+shutil 包 # __import__('shutil')
+
+生成随机数:
+import random
+print(random.randint(0,9))
+random.sample(range(10),5)
+
+linux 删除特定文件:
+rm -rf 'find . -name "*.example"'
+find . -name *.example -delete
+
+rm -rf !(keep1|keep2)   #删除keep1和keep2文件之外的所有文件
+
+find . '[^k][^e][^e][^p]*' | xargs rm -rf
+
+常用文件、目录操作函数：
+os.curdir, os.remove(), os.mkdir(), os.chdir(),os.rmdir()
+
+mookeyRunner中安装、卸载apk所用函数:
+MonkeyRunner.removePackage()
+MonkeyRunner.installPackage()
+
+python所有变量类型:
+Numbers, String, List, Tuple, Dictionary
+
+python中引号的所有作用：
+ 至于三引号，其主要目的是用来输入多行文本，也就是说在三引号之间输入的内容将被原样保留，之中的单号和双引号不用转义，其中的不可见字符比如\n和\t都会被保留，这样的好处是你可以替换一些多行的文本。
+ 单引号和双引号没有区别。他们的主要作用就是尽量避免使用转义字符
+
+python导入模块时自动搜索的路径：
+PYTHONPATH环境变量,
+
+copy.copy vs copy.deepcopy:
+A shallow copy constructs a new compound object and then (to the extent possible) inserts references into it to the objects found in the original.
+A deep copy constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original.
+
+py,pyc, pyo,pyd的区别、联系：
+.py: This is normally the input source code that you've written.
+.pyc: This is the compiled bytecode. If you import a module, python will build a *.pyc file that contains the bytecode to make importing it again later easier (and faster).
+.pyo: This is a *.pyc file that was created while optimizations (-O) was on.
+.pyd: This is basically a windows dll file. http://docs.python.org/faq/windows.html#is-a-pyd-file-the-same-as-a-dll
+
+python实现单例模式
+单例模式，也叫单子模式，是一种常用的软件设计模式。在应用这个模式时， 单例对象的类必须保证只有一个实例存在。许多时候整个系统只需要拥有一个 全局对象，这样有利于我们协调系统整体的行为。
+：
+def singleton(cls):
+    instance = cls()
+    instance.__call__ = lambda: instance
+    return instance
+
+# Sample use
+
+@singleton
+class Highlander:
+    x = 100
+    # Of course you can have any attributes or methods you like.
+
+
+highlander = Highlander()
+another_highlander = Highlander()
+assert id(highlander) == id(another_highlander)
+
+socket 编程：
+server:
+from socket import *
+myHost = ''
+myPort = 50007
+sockobj = socket(AF_INFT, SOCK_STREAM)
+sockobj.bind(myHost, myPort)
+sockobj.listen(5)
+
+while True:
+	connection, address = sockobj.accept()
+	print('Server connected by', address)
+	while True:
+		data = connection.recv(1024)
+		if not data: break
+		connection.send(b'Echo=>'+data)
+
+	connection.close()
+
+client:
+
+import sys
+from socket import *
+serverHost = 'localhost'
+serverPort = 50008
+
+message = [b'Hello world']
+
+sockobj = socket(AF_INET, SOCK_STREAM)
+sockobj.connect((serverHost, serverPort))
+
+for line in message:
+	sockobj.send(line)
+	data = sockobj.recv(1024)
+	print('Client received:', data)
+
+sockobj.close()
