@@ -1,0 +1,13 @@
+add user:
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "password",
+    roles: [ { role: "root", db: "admin" } ]
+  }
+);
+exit;
+
+login:
+mongo --port 27017 -u admin -p password --authenticationDatabase admin

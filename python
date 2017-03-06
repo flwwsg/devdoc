@@ -103,3 +103,21 @@ for line in message:
 	print('Client received:', data)
 
 sockobj.close()
+
+mysql group by:
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+
+
+get, post 区别
+type		get				post
+length:		<=2048 bytes	no restrictions
+cached:		yes				no
+data type:	only ascii		no restrictions
+security:	明文				no 明文
+visibility:	all in url		not ni url
+
+排序算法
+
