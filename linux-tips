@@ -2,4 +2,24 @@ To be able to read the Samba manual pages using the man command, the directory w
 
  MANPATH            /usr/local/samba/man
 MANPATH_MAP        /usr/local/samba/bin     /usr/local/samba/man
- 
+
+question: using xargs to cd to a directory
+The pipe runs xargs in a subprocess, and xargs runs cd in a subprocess. Changes in a subprocess do not get propagated to the parent process.
+
+The command cd is a built-in because the information about the current directory is tied to a process and only shell built-in can change current directory of the running shell.
+
+
+There are two problems with your code:
+a. xargs cannot run cd because cd is a built-in command and xargs can run only executable files.
+b. Even if you run cd in a sub-process called from xargs, it will not have any effect on the parent process as explained above.
+The solution is to run a sub-shell, inside it run cd and then you can execute commands in the new current directory.
+
+ls | xargs -L 1 bash -c 'cd "$0" && pwd && ls'
+
+add user to group:
+sudo usermod -a -G groupName userName
+
+leaving from virtualenv:
+deactivate
+enter virtualenv:
+source <path-to-env>/bin/active

@@ -1,0 +1,44 @@
+MTV:
+view:
+a view is just a Python function that takes an HttpRequest as its first parameter and returns an instance of HttpResponse. In order for a Python function to be a Django view, it must do these two things. (There are exceptions, 
+
+end with '/':
+You may be wondering what happens if someone requests the URL /hello (that is, without a trailing slash). Because our URLpattern requires a trailing slash, that URL would not match. However, by default, any request to a URL that doesn’t match a URLpattern and doesn’t end with a slash will be redirected to the same URL with a trailing slash (This is regulated by the APPEND_SLASH Django setting, which is covered in Appendix D).
+
+functions in python are first-class objects
+
+regex symbols:
+. (dot)		 	Any single character
+\d 				Any single digit
+[A-Z] 			Any character between A and Z (uppercase)
+[a-z] 			Any character between a and z (lowercase)
+[A-Za-z] 		Any character between a and z (case-insensitive)
++ 				One or more of the previous expression (e.g., \d+ matches one or more digits)
+[^/]+ 			One or more characters until (and not including) a forward slash
+? 				Zero or one of the previous expression (e.g., \d? matches zero or one digits)
+* 				Zero or more of the previous expression (e.g., \d* matches zero, one or more than one digit)
+{1,3} 			Between one and three (inclusive) of the previous expression (e.g., \d{1,3} matches one, two or three digits)
+
+
+Now that we’ve designated a wildcard for the URL, we need a way of passing that wildcard data to the view function, so that we can use a single view function for any arbitrary hour offset. We do this by placing parentheses around the data in the URLpattern that we want to save. In the case of our example, we want to save whatever number was entered in the URL, so let’s put parentheses around the \d{1,2},
+like this:
+
+url(r'^time/plus/(\d{1,2})/$', hours_ahead),
+
+we’re using parentheses to capture data from the matched text
+
+//=================================================================
+If you’re experienced in another Web development platform, you may be thinking, “Hey, let’s use a query string parameter!” – something like /time/plus?hours=3, in which the hours would be designated by the hours parameter in the URL’s query string (the part after the ‘?’).You can do that with Django (and I’ll tell you how in Chapter 7), but one of Django’s core philosophies is that URLs should be beautiful. The URL /time/plus/3/ is far cleaner, simpler, more readable, easier to recite to somebody aloud and . . . just plain prettier than its query string counterpart. Pretty URLs are a characteristic of a quality Web application.
+Django’s URLconf system encourages pretty URLs by making it easier to use pretty URLs than not to.
+//=================================================================
+
+
+templates:
+variable:
+Any text surrounded by a pair of braces (e.g., {{ person_name }}) is a variable. 
+
+template tag:
+Any text that’s surrounded by curly braces and percent signs (e.g.{% if ordered_warranty %}) is a template tag, which telling template system to 'do something'
+
+
+
