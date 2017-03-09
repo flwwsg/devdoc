@@ -25,7 +25,7 @@ mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRAN
 如果你想允许用户jack从ip为10.10.50.127的主机连接到mysql服务器，并使用654321作为密码
 	
 mysql>GRANT ALL PRIVILEGES ON *.* TO 'jack'@’10.10.50.127’ IDENTIFIED BY '654321' WITH GRANT OPTION;
-mysql>FLUSH RIVILEGES
+mysql>FLUSH PRIVILEGES
 
 c:在安装mysql的机器上运行：
 //进入MySQL服务器
@@ -53,3 +53,8 @@ ALTER TABLE `table_name` CHANGE `old_column` `new_column` data_type
 add column
 ALTER TABLE `table_name` ADD `column_name` data_type
  
+mysql for django :
+install mysqlclient, libmysqlclient-devel, python3-devel
+
+mysqldump:
+mysqldump -uroot -pPASSWORD  [database name] > [dump file]

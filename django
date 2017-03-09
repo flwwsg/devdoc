@@ -40,5 +40,183 @@ Any text surrounded by a pair of braces (e.g., {{ person_name }}) is a variable.
 template tag:
 Any text that’s surrounded by curly braces and percent signs (e.g.{% if ordered_warranty %}) is a template tag, which telling template system to 'do something'
 
+dot(.):
+Use a dot to access dictionary keys, attributes, methods, or indices of an object
+Dots can also refer to methods of objects, Note that you do not include parentheses in the method calls. Also, it’s not possible to pass arguments to the methods; you can only call methods that have no required arguments.
+and Negative list indices are not allowed.
+
+eg:
+>>> from django.template import Template, Context
+>>> t = Template('{{ var }} -- {{ var.upper }} -- {{ var.isdigit }}')
+>>> t.render(Context({'var': 'hello'}))
+'hello -- HELLO -- False'
+>>> t.render(Context({'var': '123'}))
+'123 -- 123 -- True'
+
+Dot lookups can be summarized like this: when the template system encounters a dot in a variable name, it tries the following lookups, in this orderDictionary lookup (e.g., foo["bar"]Attribute lookup (e.g., foo.barMethod call (e.g., foo.bar())
+List-index lookup (e.g., foo[2])
 
 
+In the real world, it’s unacceptable for a Web site to become inaccessible due to a small template syntax error
+
+tags and filters:
+{% if %} and {% endif %}:
+if (athlete_list and coach_list) or cheerleader_list
+
+NOTE: Use of actual parentheses in the if tag is invalid syntax.
+
+If you need parentheses to indicate precedence, you should use nested if tags. The use of parentheses for controlling order of operations is not supported. If you find yourself needing parentheses, consider performing logic outside the template and passing the result of that as a dedicated template variable. Or, just use nested {% if %} tags, like this: {% if athlete_list % {% if coach_list or cheerleader_list % <p>We have athletes, and either coaches or cheerleaders! </p>
+ {% endif %}
+ {% endif %}
+
+{% for %} and {% endfor %}:
+Add reversed to the tag to loop over the list in reverse:
+
+{% for athlete in athlete_list reversed %}
+...
+{% endfor %}
+
+
+Because this pattern is so common, the for tag supports an optional {% empty %} clause that lets you define what to output if the list is empty. This example is equivalent to the previous one:
+
+{% if athlete_list %}
+
+{% for athlete in athlete_list %}
+<p>{{ athlete.name }}</p>
+{% endfor %}
+
+{% else %}
+<p>There are no athletes. Only computer programmers.</p>
+{% endif %}
+
+{% for athlete in athlete_list %}
+<p>{{ athlete.name }}</p>
+{% empty %}
+<p>There are no athletes. Only computer programmers.</p>
+{% endfor %}
+
+Within each {% for %} loop, you get access to a template variable called forloop. This variable has a few attributes that give you information about the progress of the loop:
+
+forloop.counter is always set to an integer representing the number of times the loop has been entered. This is one-indexed, so the first time through the loop, forloop.counter will be set to 1.
+
+forloop.counter0 is like forloop.counter, except it's zero-indexed
+
+forloop.revcounter is always set to an integer representing the number of remaining items in the loop. The first time through the loop, forloop.revcounter will be set to the total number of items in the sequence you’re traversing. The last time through the loop, forloop.revcounter will be set to 1.
+
+forloop.revcounter0 is like forloop.revcounter, except it’s zero-indexed. The first time through the loop, forloop.revcounter0 will be set to the number of elements in the sequence minus 1. The last time through the loop, it will be set to 0.
+
+forloop.first
+forloop.last
+
+forloop.parentloop is a reference to the forloop object for the parent loop, in case of nested loops. 
+
+The forloop variable is only available within loops. After the template parser has reached {% endfor %}, forloop disappears.
+
+{% ifequal %} and {% endifequal %} :
+Only template variables, strings, integers, and decimal numbers are allowed as arguments to {% ifequal %}.
+
+{% comment %} {% endcomment %} multi-line comments 
+{# comment #} single line comment 
+
+{% include filename %}
+
+Filters:
+As explained earlier in this chapter, template filters are simple ways of altering the value of variables before they’re displayed. Filters use a pipe character, like this:
+
+{{ name|lower }}
+
+Filters can be chained – that is, they can be used in tandem such that the output of one filter is applied to the next.
+
+Here’s an example that takes the first element in a list and converts it to uppercase:
+
+{{ my_list|first|upper }}
+
+addslashes: Adds a backslash before any backslash, single quote, or double quote. This is useful for escaping strings. For example:{{ value|addslashes }}
+
+date: Formats a date or datetime object according to a format string given in the parameter. For example: {{ pub_date|date:"F j, Y" }}Format strings are defined in Appendix E.
+
+length: Returns the length of the value. For a list, this returns the number of elements. For a string, this returns the number of characters. If the variable is undefined, length returns 0.
+
+
+Models:
+In order to provide convenient data-access APIs, Django needs to know the database layout somehow, and there are two ways of accomplishing this.The first way would be to explicitly describe the data in Python, and the second way would be to introspect the database at runtime to determine the data models.
+
+install models:
+1. including app in settings.py within INSTALLED_APPS
+
+filter:return a QuerySet, like list
+__:
+Like Python itself, Django uses the double underscore to signal that something “magic” is happening – here, the __contains part gets translated by Django into a SQL LIKE statement
+
+__icontains case insensitive
+__exact == '='
+__iexact case insensitive
+
+get: only a single object is returned
+Because of that, a query resulting in multiple objects will cause an exception
+
+A query that returns no objects also causes an exception: DoesNotExist
+
+order_by:
+You can also specify reverse ordering by prefixing the field name with a “-“ (that’s a minus character)
+You can use this Meta
+class on any model to specify various model-specific options. 
+
+Note that negative slicing is not supported
+
+update:
+Django’s save() method sets all of the column values, not just the name column. If you’re in an environment where other columns of the database might change due to some other process, it’s smarter to change only the column you need to change. To do this, use the update() method on QuerySet objects.The update() method works on any QuerySet, which means you can edit multiple records in bulk.
+The update() method has a return value – an integer representing how many records changed. 
+
+delete:
+To delete an object from your database, simply call the object’s delete() method.
+You can also delete objects in bulk by calling delete() on the result of any QuerySet.
+
+Admin Site:
+create user, superuser: python3 manage.py createsuperuser
+
+if you want to allow blank values in a date field (e.g., DateField, TimeField, DateTimeField) or numeric field (e.g., IntegerField, DecimalField, FloatField), you’ll need to use both null=True and blank=True.
+
+Customizing Field Labels: using verbose_name
+
+
+HttpRequest methods and attributes:
+Attribute/method 		Description 		Example
+request.path 			The full path, not including the domain but including the leading slash. 			“/hello/”
+request.get_host() 		The host (i.e., the “domain,” in common parlance). 									“127.0.0.1:8000” or “www.example.com”
+request.get_full_path() The path, plus a query string (if available). 								  “/hello/?print=true”
+request.is_secure() 	True if the request was made via HTTPS. Otherwise, False. 							True or False 
+
+request.META:
+display META with key:
+def ua_dispaly_good2(request):
+	ua = request.META.get('HTTP_USER_AGENT',  'unknown')
+	return HttpResponse('Your browser is %s' % ua)
+
+def display_meta(request):
+	values = request.META.items()
+	values.sort()
+	html = []
+	for k, v in values:
+		html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
+	return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
+urls:
+named variable:url(r'^reviews/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$',views.month_archive),
+non-named variable: url(r'^reviews/([0-9]{4})/([0-9]{2})/$', views.month_archive),
+
+Captured Arguments Are Always Strings
+Django provides tools for performing URL reversing that match the different layers where URLs are needed:
+
+    In templates: Using the url template tag.
+    In Python code: Using the django.core.urlresolvers.reverse() function.
+    In higher level code related to handling of URLs of Django model instances: The get_absolute_url() method.
+
+return json
+data = cursor.fetchall()
+json_data = json.dumps(data)
+return HttpResponse(json_data, content_type="application/json")
+
+show queries:
+MyModel.objects.filter(xxx).query

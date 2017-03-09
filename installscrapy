@@ -1,6 +1,7 @@
-lxml
+python3-lxml
 libffi48-devel
 python3-devel
-twisted
+python3-Twisted
 libopenssl-devel
 zlib-devel
+python3-selenium
