@@ -220,3 +220,15 @@ return HttpResponse(json_data, content_type="application/json")
 
 show queries:
 MyModel.objects.filter(xxx).query
+
+
+rebuild tables:
+1. delete migrations:
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+2. drop database:
+
+3. create initial migrations and generate the database schema:
+python manage.py makemigrations
+python manage.py migrate

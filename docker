@@ -1,0 +1,60 @@
+delete images: docker rmi $imagetag
+
+print container: docker ps -a 
+
+delete container: docker rm 
+
+Dockerfile包含创建镜像所需要的全部指令: 
+
+docker-compose: 用compose，可以在一个文件里，定义多容器的应用。该YAML配置语言，用于描述和组装多容器的分布式应用。
+
+compose template file :(eg)
+db:
+		image:	postgres
+web:
+		build:	.
+		command:	python	manage.py	runserver	0.0.0.0:8000
+		volumes:
+				-	.:/code
+		ports:
+				-	"8000:8000"
+		links:
+				-	db
+
+add docker hub:
+
+新版的 Docker 使用 /etc/docker/daemon.json（Linux） 或者 %programdata%\docker\config\daemon.json（Windows） 来配置 Daemon。
+
+请在该配置文件中加入（没有该文件的话，请先建一个）：
+
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+
+or:
+http://www.jianshu.com/p/9fce6e583669
+
+pip: mirror
+1.打开pip.conf
+
+1
+vi ~/.pip/pip.conf
+2.写入以下内容
+
+1
+2
+[global]
+index-url = http://e.pypi.python.org/simple
+速度比较快的国内镜像，都来自清华大学，服务器在北京。
+
+公网的服务器为官方镜像 公网：http://e.pypi.python.org/simple
+
+教育网：http://pypi.tuna.tsinghua.edu.cn/simple
+
+save image:
+docker save -o $saved_file_name $image_name
+
+load image:
+docker load -i image_path
+
+Docker 端口映射

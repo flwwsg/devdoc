@@ -1,0 +1,5 @@
+build branch :
+git checkout -b $branch
+
+delete branch:
+git branch -d 
