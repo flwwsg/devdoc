@@ -1,0 +1,5 @@
+install zypper:
+a. install key: sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+b. select channel: sudo zypper addrepo -g -f https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+c. install sublime text: sudo zypper install sublime-text
+
