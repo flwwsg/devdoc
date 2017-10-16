@@ -1,0 +1,4 @@
+clean software:
+sudo rm -fR /var/lib/apt/lists/*
+sudo apt-get clean
+suod apt-get update

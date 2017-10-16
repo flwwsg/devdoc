@@ -1,0 +1,5 @@
+drop database :
+drop database db name
+
+show all databases:
+\l or \list
